@@ -7,4 +7,4 @@ Disponível no Youtube gratuitamente: https://www.youtube.com/playlist?list=PLGx
 ### Tecnologias
 - Angular
 - Java
-- Sprint Boot
+- Spring Boot
