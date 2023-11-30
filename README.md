@@ -42,12 +42,10 @@ export interface Course {
   category: string;
 }
 ```
-<br>
 
 ### Tecnologias Web
 > - Angular
 > - Angular Material
-<br>
 
 ### Tecnologias API/Server
 > - Java
