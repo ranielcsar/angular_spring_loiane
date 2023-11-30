@@ -3,29 +3,39 @@
 
 Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY
 
-### O Crud
-A aplicação tem como objetivo o gerenciamento de Cursos no qual você pode criar um novo curso, atualizar, deletar e ver todos os cursos cadastrados!
+<br>
 
-### Funcionalidades
-- [x] listar cursos
+> ### Sobre o CRUD
+A aplicação tem como objetivo o gerenciamento de Cursos no qual você pode criar um novo curso, atualizar, deletar e ver todos os cursos cadastrados!
+<br>
+<br>
+<br>
+
+> ### Funcionalidades
+
+#### Listar cursos
   - [x] endpoint
   - [x] integração no front
       
-- [x] criar cursos
+#### Criar curso
   - [x] endpoint
   - [x] integração no front
         
-- [x] atualizar curso
+#### Atualizar curso
   - [x] endpoint
   - [x] integração no front
         
-- [x] deletar curso
+#### Deletar curso
   - [x] endpoint
   - [x] integração no front
+     
+#### Front
+  - [x] mensagens de feedback de sucesso e erro
+  - [ ] diálogo de confirmação de deleção
         
-- [x] mensagens de feedback de sucesso e erro
-- [ ] diálogo de confirmação de deleção
-
+#### Back
+  - [ ] adicionar páginação
+  - [ ] aceitar imagens
 ---
 
 Por enquanto o curso possui essas propriedades:
@@ -36,12 +46,14 @@ export interface Course {
   category: string;
 }
 ```
+<br>
 
-### Tecnologias Web
+> ### Tecnologias Web
 - Angular
 - Angular Material
+<br>
 
-### Tecnologias Server
+> ### Tecnologias API/Server
 - Java
 - Spring Boot
 - Lombok
