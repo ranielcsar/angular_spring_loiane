@@ -9,7 +9,7 @@ Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGx
 
 ### Funcionalidades
 
-#### Listar cursos, criar curso, atualizar cursos, deletar curso
+#### CURSO: Listar | Criar | Atualizar | Deletar
 >  - [x] endpoint
 >  - [x] integração no front
      
