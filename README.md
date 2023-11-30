@@ -3,25 +3,13 @@
 
 Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY
 
-### Sobre o CRUD
+### Sobre
 > A aplicação tem como objetivo o gerenciamento de Cursos no qual você pode criar um novo curso, atualizar, deletar e ver todos os cursos cadastrados!
 <br>
 
 ### Funcionalidades
 
-#### Listar cursos
->  - [x] endpoint
->  - [x] integração no front
-      
-#### Criar curso
->  - [x] endpoint
->  - [x] integração no front
-        
-#### Atualizar curso
->  - [x] endpoint
->  - [x] integração no front
-        
-#### Deletar curso
+#### Listar cursos, criar curso, atualizar cursos, deletar curso
 >  - [x] endpoint
 >  - [x] integração no front
      
