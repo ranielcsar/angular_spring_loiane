@@ -4,7 +4,13 @@
 Disponível no Youtube gratuitamente: https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY
 
 
-### Tecnologias
+### Tecnologias Web
 - Angular
+- Angular Material
+
+### Tecnologias Server
 - Java
 - Spring Boot
+- Lombok
+- Maven
+- H2 Database
