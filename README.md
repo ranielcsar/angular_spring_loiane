@@ -10,16 +10,18 @@ Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGx
 ### Funcionalidades
 
 #### CURSO: Listar | Criar | Atualizar | Deletar
->  - [x] endpoint
->  - [x] integração no front
+> - [x] endpoints
+> - [x] integração no front
      
 #### Front
->  - [x] mensagens de feedback de sucesso e erro
->  - [ ] diálogo de confirmação de deleção
+> - [x] mensagens de feedback de sucesso e erro
+> - [x] validações nos formulários
+> - [ ] diálogo de confirmação de deleção
         
 #### Back
->  - [ ] adicionar páginação
->  - [ ] aceitar imagens
+> - [x] validação de dados ao criar curso
+> - [ ] adicionar páginação
+> - [ ] aceitar imagens
 ---
 
 Por enquanto o curso possui essas propriedades:
@@ -41,3 +43,4 @@ export interface Course {
 > - Lombok
 > - Maven
 > - H2 Database
+> - Java Bean Validation
