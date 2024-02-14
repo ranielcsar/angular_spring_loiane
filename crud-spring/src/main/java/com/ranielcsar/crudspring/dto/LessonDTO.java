@@ -1,5 +1,8 @@
 package com.ranielcsar.crudspring.dto;
 
-public class LessonDTO {
+public record LessonDTO(
+    Long id,
+    String name,
+    String youtubeUrl) {
 
 }
