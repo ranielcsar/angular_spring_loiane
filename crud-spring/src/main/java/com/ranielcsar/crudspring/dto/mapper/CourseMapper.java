@@ -3,45 +3,54 @@ package com.ranielcsar.crudspring.dto.mapper;
 import org.springframework.stereotype.Component;
 
 import com.ranielcsar.crudspring.dto.CourseDTO;
+import com.ranielcsar.crudspring.dto.LessonDTO;
 import com.ranielcsar.crudspring.enums.Category;
 import com.ranielcsar.crudspring.model.Course;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CourseMapper {
 
-    public CourseDTO toDTO(Course course) {
-        if (course == null) {
-            return null;
-        }
-
-        return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), course.getLessons());
+  public CourseDTO toDTO(Course course) {
+    if (course == null) {
+      return null;
     }
 
-    public Course toEntity(CourseDTO courseDTO) {
-        if (courseDTO == null) {
-            return null;
-        }
+    List<LessonDTO> lessons = course.getLessons()
+        .stream()
+        .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(), lesson.getYoutubeUrl()))
+        .collect(Collectors.toList());
 
-        Course course = new Course();
+    return new CourseDTO(course.getId(), course.getName(), course.getCategory().getValue(), lessons);
+  }
 
-        if (courseDTO.id() != null) {
-            course.setId(courseDTO.id());
-        }
-        course.setName(courseDTO.name());
-        course.setCategory(convertToCategory(courseDTO.category()));
-
-        return course;
+  public Course toEntity(CourseDTO courseDTO) {
+    if (courseDTO == null) {
+      return null;
     }
 
-    public Category convertToCategory(String value) {
-        if (value == null) {
-            return null;
-        }
+    Course course = new Course();
 
-        return switch (value) {
-            case "Front-end" -> Category.FRONTEND;
-            case "Back-end" -> Category.BACKEND;
-            default -> throw new IllegalArgumentException("Categoria inválida: " + value);
-        };
+    if (courseDTO.id() != null) {
+      course.setId(courseDTO.id());
     }
+    course.setName(courseDTO.name());
+    course.setCategory(convertToCategory(courseDTO.category()));
+
+    return course;
+  }
+
+  public Category convertToCategory(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    return switch (value) {
+      case "Front-end" -> Category.FRONTEND;
+      case "Back-end" -> Category.BACKEND;
+      default -> throw new IllegalArgumentException("Categoria inválida: " + value);
+    };
+  }
 }
