@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { CoursesService } from '../../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../model/course';
+import { Lesson } from '../../model/lesson';
 
 @Component({
   selector: 'app-course-form',
@@ -12,14 +13,8 @@ import { Course } from '../../model/course';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  form = this.formBuilder.group({
-    _id: [''],
-    name: [
-      '',
-      [Validators.required, Validators.minLength(5), Validators.maxLength(100)],
-    ],
-    category: ['', [Validators.required]],
-  });
+  form!: FormGroup;
+
   formTitle = 'Adicionar novo curso';
 
   constructor(
@@ -37,7 +32,41 @@ export class CourseFormComponent implements OnInit {
       this.formTitle = `Editar curso: ${course.name}`;
     }
 
-    this.form.setValue(course);
+    this.form = this.formBuilder.group({
+      _id: [course._id],
+      name: [
+        course.name,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+        ],
+      ],
+      category: [course.category, [Validators.required]],
+      lessons: this.formBuilder.array(this.retriveLessons(course)),
+    });
+  }
+
+  private retriveLessons(course: Course) {
+    const lessons = [];
+
+    if (course?.lessons) {
+      course.lessons.forEach((lesson) => {
+        lessons.push(this.createLesson(lesson));
+      });
+    } else {
+      lessons.push(this.createLesson());
+    }
+
+    return lessons;
+  }
+
+  private createLesson(lesson: Lesson = { id: '', name: '', youtubeUrl: '' }) {
+    return this.formBuilder.group({
+      id: [lesson.id],
+      name: [lesson.name],
+      youtubeUrl: [lesson.youtubeUrl],
+    });
   }
 
   getErrorMessage(fieldName: string) {
