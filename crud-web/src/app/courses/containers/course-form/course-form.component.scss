@@ -28,3 +28,10 @@ mat-card-actions {
 mat-card-actions > button {
   min-width: 8rem;
 }
+
+section.lessons {
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-template-columns: 1fr 0.5fr;
+  gap: 1rem;
+}
