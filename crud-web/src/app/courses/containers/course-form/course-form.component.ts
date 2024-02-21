@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  NonNullableFormBuilder,
+  UntypedFormArray,
+  Validators,
+} from '@angular/forms';
 import { CoursesService } from '../../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
@@ -50,7 +55,7 @@ export class CourseFormComponent implements OnInit {
   private retriveLessons(course: Course) {
     const lessons = [];
 
-    if (course?.lessons) {
+    if (course?.lessons.length !== 0) {
       course.lessons.forEach((lesson) => {
         lessons.push(this.createLesson(lesson));
       });
@@ -64,9 +69,13 @@ export class CourseFormComponent implements OnInit {
   private createLesson(lesson: Lesson = { id: '', name: '', youtubeUrl: '' }) {
     return this.formBuilder.group({
       id: [lesson.id],
-      name: [lesson.name],
-      youtubeUrl: [lesson.youtubeUrl],
+      name: [lesson.name, [Validators.required]],
+      youtubeUrl: [lesson.youtubeUrl, [Validators.required]],
     });
+  }
+
+  getLessonsFormArray() {
+    return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
 
   getErrorMessage(fieldName: string) {
