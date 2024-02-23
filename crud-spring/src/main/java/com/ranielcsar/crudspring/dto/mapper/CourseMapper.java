@@ -6,6 +6,7 @@ import com.ranielcsar.crudspring.dto.CourseDTO;
 import com.ranielcsar.crudspring.dto.LessonDTO;
 import com.ranielcsar.crudspring.enums.Category;
 import com.ranielcsar.crudspring.model.Course;
+import com.ranielcsar.crudspring.model.Lesson;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +39,22 @@ public class CourseMapper {
     }
     course.setName(courseDTO.name());
     course.setCategory(convertToCategory(courseDTO.category()));
+
+    List<Lesson> lessons = courseDTO.lessons()
+        .stream()
+        .map(lessonDTO -> {
+          Lesson lesson = new Lesson();
+          lesson.setId(lessonDTO.id());
+          lesson.setName(lessonDTO.name());
+          lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
+
+          lesson.setCourse(course);
+
+          return lesson;
+        })
+        .collect(Collectors.toList());
+
+    course.setLessons(lessons);
 
     return course;
   }
