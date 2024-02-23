@@ -32,6 +32,6 @@ mat-card-actions > button {
 section.lessons {
   display: grid;
   grid-auto-rows: max-content;
-  grid-template-columns: 1fr 0.5fr;
+  grid-template-columns: 1fr max-content;
   gap: 1rem;
 }
