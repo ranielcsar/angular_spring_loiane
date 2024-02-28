@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../model/course';
 import { Lesson } from '../../model/lesson';
+import { FormUtilsService } from '@/app/shared/form/form-utils.service';
 
 @Component({
   selector: 'app-course-form',
@@ -27,7 +28,8 @@ export class CourseFormComponent implements OnInit {
     private service: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public formUtils: FormUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +50,10 @@ export class CourseFormComponent implements OnInit {
         ],
       ],
       category: [course.category, [Validators.required]],
-      lessons: this.formBuilder.array(this.retriveLessons(course)),
+      lessons: this.formBuilder.array(
+        this.retriveLessons(course),
+        Validators.required
+      ),
     });
   }
 
@@ -66,11 +71,25 @@ export class CourseFormComponent implements OnInit {
     return lessons;
   }
 
-  private createLesson(lesson: Lesson = { id: '', name: '', youtubeUrl: '' }) {
+  private createLesson(lesson: Lesson = { _id: '', name: '', youtubeUrl: '' }) {
     return this.formBuilder.group({
-      id: [lesson.id],
-      name: [lesson.name, [Validators.required]],
-      youtubeUrl: [lesson.youtubeUrl, [Validators.required]],
+      id: [lesson._id],
+      name: [
+        lesson.name,
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(100),
+        ],
+      ],
+      youtubeUrl: [
+        lesson.youtubeUrl,
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(11),
+        ],
+      ],
     });
   }
 
@@ -78,31 +97,21 @@ export class CourseFormComponent implements OnInit {
     return (<UntypedFormArray>this.form.get('lessons')).controls;
   }
 
-  getErrorMessage(fieldName: string) {
-    const field = this.form.get(fieldName);
+  addNewLesson() {
+    const lessons = this.form.get('lessons') as UntypedFormArray;
+    lessons.push(this.createLesson());
+  }
 
-    if (field?.hasError('required')) {
-      return `Campo obrigatório`;
-    }
-
-    if (field?.hasError('minlength')) {
-      const requiredLength = field.errors
-        ? field.errors['minlength']['requiredLength']
-        : 5;
-      return `NOME precisa ter no mínimo ${requiredLength} caracteres.`;
-    }
-
-    if (field?.hasError('maxlength')) {
-      const requiredLength = field.errors
-        ? field.errors['maxlength']['requiredLength']
-        : 100;
-      return `NOME pode ter no máximo ${requiredLength} caracteres.`;
-    }
-
-    return `Campo inválido`;
+  removeLesson(index: number) {
+    const lessons = this.form.get('lessons') as UntypedFormArray;
+    lessons.removeAt(index);
   }
 
   onSubmit() {
+    if (!this.form.valid) {
+      return this.formUtils.validateAllFormFields(this.form);
+    }
+
     this.service.save(this.form.value).subscribe(
       () => this.onSuccess(),
       () => this.onError()
