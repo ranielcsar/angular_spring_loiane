@@ -44,7 +44,7 @@ public class CourseMapper {
         .stream()
         .map(lessonDTO -> {
           Lesson lesson = new Lesson();
-          lesson.setId(lessonDTO.id());
+          lesson.setId(courseDTO.id());
           lesson.setName(lessonDTO.name());
           lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
 
