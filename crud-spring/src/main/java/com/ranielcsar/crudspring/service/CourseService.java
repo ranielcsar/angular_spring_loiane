@@ -13,11 +13,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import com.ranielcsar.crudspring.dto.CourseDTO;
-import com.ranielcsar.crudspring.dto.LessonDTO;
 import com.ranielcsar.crudspring.dto.mapper.CourseMapper;
 import com.ranielcsar.crudspring.exception.RecordNotFoundException;
 import com.ranielcsar.crudspring.model.Course;
-import com.ranielcsar.crudspring.model.Lesson;
 
 @Validated
 @Service
@@ -49,26 +47,16 @@ public class CourseService {
         return courseMapper.toDTO(newCourse);
     }
 
-    public CourseDTO update(@NotNull @Positive Long id, @Valid @NotNull CourseDTO course) {
+    public CourseDTO update(@NotNull @Positive Long id, @Valid @NotNull CourseDTO courseDTO) {
         return courseRepository.findById(id)
                 .map(courseFound -> {
-                    System.out.println(id);
-                    courseFound.setName(course.name());
-                    courseFound.setCategory(courseMapper.convertToCategory(course.category()));
+                    Course course = courseMapper.toEntity(courseDTO);
 
-                    List<Lesson> lessons = course.lessons()
-                            .stream()
-                            .map(lessonDTO -> {
-                                Lesson lesson = new Lesson();
-                                lesson.setId(id);
-                                lesson.setName(lessonDTO.name());
-                                lesson.setYoutubeUrl(lessonDTO.youtubeUrl());
-                                lesson.setCourse(courseMapper.toEntity(course));
+                    courseFound.setName(course.getName());
+                    courseFound.setCategory(courseMapper.convertToCategory(courseDTO.category()));
 
-                                return lesson;
-                            })
-                            .collect(Collectors.toList());
-                    courseFound.setLessons(lessons);
+                    courseFound.getLessons().clear();
+                    course.getLessons().forEach(courseFound.getLessons()::add);
 
                     return courseMapper.toDTO(courseRepository.save(courseFound));
                 })
