@@ -5,12 +5,12 @@ import {
   UntypedFormArray,
   Validators,
 } from '@angular/forms';
-import { CoursesService } from '../../services/courses.service';
+import { CoursesService } from '@/app/courses/services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Course } from '../../model/course';
-import { Lesson } from '../../model/lesson';
+import { Course } from '@/app/courses/model/course';
+import { Lesson } from '@/app/courses/model/lesson';
 import { FormUtilsService } from '@/app/shared/form/form-utils.service';
 
 @Component({
@@ -71,9 +71,9 @@ export class CourseFormComponent implements OnInit {
     return lessons;
   }
 
-  private createLesson(lesson: Lesson = { _id: '', name: '', youtubeUrl: '' }) {
+  private createLesson(lesson: Lesson = { id: '', name: '', youtubeUrl: '' }) {
     return this.formBuilder.group({
-      id: [lesson._id],
+      id: [lesson.id],
       name: [
         lesson.name,
         [
