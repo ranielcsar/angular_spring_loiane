@@ -13,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 import com.ranielcsar.crudspring.dto.CourseDTO;
+import com.ranielcsar.crudspring.dto.LessonDTO;
 import com.ranielcsar.crudspring.dto.mapper.CourseMapper;
 import com.ranielcsar.crudspring.exception.RecordNotFoundException;
 import com.ranielcsar.crudspring.model.Course;
@@ -54,7 +55,6 @@ public class CourseService {
 
                     courseFound.setName(course.getName());
                     courseFound.setCategory(courseMapper.convertToCategory(courseDTO.category()));
-
                     courseFound.getLessons().clear();
                     course.getLessons().forEach(courseFound.getLessons()::add);
 
