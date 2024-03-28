@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../model/course';
 import { HttpClient } from '@angular/common/http';
+import { CoursePage } from '../model/course-page';
+import { first } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +12,10 @@ export class CoursesService {
 
   constructor(private http: HttpClient) {}
 
-  list() {
-    return this.http.get<Course[]>(this.API);
+  list(page = 0, pageSize = 10) {
+    return this.http
+      .get<CoursePage>(this.API, { params: { page, pageSize } })
+      .pipe(first());
   }
 
   loadById(id: string) {

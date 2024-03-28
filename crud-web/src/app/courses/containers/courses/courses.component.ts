@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Course } from '../../model/course';
 import { CoursesService } from '../../services/courses.service';
-import { Observable, catchError, first, of } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../../../shared/components/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CoursePage } from '../../model/course-page';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-courses',
@@ -13,7 +15,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
-  courses$: Observable<Course[]> | null = null;
+  courses$: Observable<CoursePage> | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  pageIndex = 0;
+  pageSize = 10;
 
   onError(errorMsg: string) {
     this.dialog.open(ErrorDialogComponent, {
@@ -33,15 +40,30 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  refresh() {
-    this.courses$ = this.coursesService.list().pipe(
-      first(),
-      catchError((error) => {
-        this.onError('Erro ao carregar cursos.');
-        console.error(error);
-        return of([]);
-      })
-    );
+  refresh(
+    pageEvent: PageEvent = {
+      length: 0,
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+    }
+  ) {
+    this.courses$ = this.coursesService
+      .list(pageEvent.pageIndex, pageEvent.pageSize)
+      .pipe(
+        tap(() => {
+          this.pageIndex = pageEvent.pageIndex;
+          this.pageSize = pageEvent.pageSize;
+        }),
+        catchError((error) => {
+          this.onError('Erro ao carregar cursos.');
+          console.error(error);
+          return of({
+            courses: [] as Course[],
+            totalElements: 0,
+            totalPages: 0,
+          });
+        })
+      );
   }
 
   onAdd() {
