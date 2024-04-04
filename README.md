@@ -35,7 +35,7 @@ export interface Course {
 ```
 
 ### Tecnologias Web
-- Angular
+- Angular v15 (master) e Angular v17 (angular17)
 - Angular Material
 
 ### Tecnologias API/Server
