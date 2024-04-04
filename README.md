@@ -1,7 +1,9 @@
 ## Repositório de estudos seguindo a trilha de CRUD Angular + Spring da Loiane Groner
 
 
-Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY
+[Disponível gratuitamente no Youtube](https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY)
+
+[Repo original da Loiane](https://github.com/loiane/crud-angular-spring)
 
 ### Sobre
 A aplicação tem como objetivo o gerenciamento de Cursos no qual você pode criar um novo curso, atualizar, deletar e ver todos os cursos cadastrados!
