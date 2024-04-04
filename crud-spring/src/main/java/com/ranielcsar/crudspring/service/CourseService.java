@@ -69,7 +69,8 @@ public class CourseService {
     }
 
     public void delete(@NotNull @Positive Long id) {
-        Course course = courseRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id));
         courseRepository.delete(course);
     }
 
