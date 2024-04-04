@@ -13,7 +13,7 @@ import { CoursesListComponent } from '../../components/courses-list/courses-list
 import { AsyncPipe } from '@angular/common';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard } from '@angular/material/card';
-import { ConfirmationDialogComponent } from '@/app/shared/components/confirmation-dialog/error-dialog.component';
+import { ConfirmationDialogComponent } from '@/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-courses',
