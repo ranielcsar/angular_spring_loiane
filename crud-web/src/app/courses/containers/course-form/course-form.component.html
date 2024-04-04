@@ -10,12 +10,14 @@
           matInput
           placeholder="Ex: Manipulando CSS Grid"
           #name
-        />
+          />
         <mat-hint align="end">{{ name.value.length || 0 }} / 100</mat-hint>
 
-        <mat-error *ngIf="form.get('name')?.invalid">{{
-          formUtils.getErrorMessage(form, "name")
-        }}</mat-error>
+        @if (form.get('name')?.invalid) {
+          <mat-error>{{
+            formUtils.getErrorMessage(form, "name")
+          }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -24,9 +26,11 @@
           <mat-option value="Front-end">Frontend</mat-option>
           <mat-option value="Back-end">Backend</mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('category')?.invalid">{{
-          formUtils.getErrorMessage(form, "category")
-        }}</mat-error>
+        @if (form.get('category')?.invalid) {
+          <mat-error>{{
+            formUtils.getErrorMessage(form, "category")
+          }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-toolbar>
@@ -37,50 +41,54 @@
           color="primary"
           type="button"
           (click)="addNewLesson()"
-        >
+          >
           <mat-icon aria-label="Adicionar nova aula">add</mat-icon>
         </button>
       </mat-toolbar>
 
-      <mat-error *ngIf="formUtils.isFormArrayRequired(form, 'lessons')">
-        Adicione pelo menos uma aula.
-      </mat-error>
+      @if (formUtils.isFormArrayRequired(form, 'lessons')) {
+        <mat-error>
+          Adicione pelo menos uma aula.
+        </mat-error>
+      }
 
-      <section
-        class="lessons"
-        formArrayName="lessons"
-        *ngFor="let lesson of getLessonsFormArray(); let i = index"
-      >
-        <ng-container [formGroupName]="i">
-          <mat-form-field appearance="outline">
-            <mat-label>Nome da Aula</mat-label>
-            <input formControlName="name" matInput />
-            <mat-error *ngIf="getLessonsFormArray()[i].get('name')?.invalid">
-              {{ formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'name', i) }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>URL</mat-label>
-            <span style="padding-left: 1rem; color: gray" matPrefix>www.youtube.com/watch?v=</span>
-            <input formControlName="youtubeUrl" matInput type="text" />
-            <mat-error
-              *ngIf="getLessonsFormArray()[i].get('youtubeUrl')?.invalid"
-            >
-            {{ formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'youtubeUrl', i) }}
-            </mat-error>
-          </mat-form-field>
-
-          <button
-            mat-icon-button
-            color="warn"
-            type="button"
-            (click)="removeLesson(i)"
+      @for (lesson of getLessonsFormArray(); track lesson; let i = $index) {
+        <section
+          class="lessons"
+          formArrayName="lessons"
           >
-            <mat-icon aria-label="Remover aula">delete</mat-icon>
-          </button>
-        </ng-container>
-      </section>
+          <ng-container [formGroupName]="i">
+            <mat-form-field appearance="outline">
+              <mat-label>Nome da Aula</mat-label>
+              <input formControlName="name" matInput />
+              @if (getLessonsFormArray()[i].get('name')?.invalid) {
+                <mat-error>
+                  {{ formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'name', i) }}
+                </mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>URL</mat-label>
+              <span style="padding-left: 1rem; color: gray" matPrefix>www.youtube.com/watch?v=</span>
+              <input formControlName="youtubeUrl" matInput type="text" />
+              @if (getLessonsFormArray()[i].get('youtubeUrl')?.invalid) {
+                <mat-error
+                  >
+                  {{ formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'youtubeUrl', i) }}
+                </mat-error>
+              }
+            </mat-form-field>
+            <button
+              mat-icon-button
+              color="warn"
+              type="button"
+              (click)="removeLesson(i)"
+              >
+              <mat-icon aria-label="Remover aula">delete</mat-icon>
+            </button>
+          </ng-container>
+        </section>
+      }
 
       <mat-card-actions class="action-center">
         <button mat-flat-button type="button" (click)="onCancel()">Cancelar</button>

@@ -10,24 +10,24 @@ import { CoursePage } from '../../model/course-page';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { CoursesListComponent } from '../../components/courses-list/courses-list.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard } from '@angular/material/card';
+import { ConfirmationDialogComponent } from '@/app/shared/components/confirmation-dialog/error-dialog.component';
 
 @Component({
-    selector: 'app-courses',
-    templateUrl: './courses.component.html',
-    styleUrls: ['./courses.component.scss'],
-    standalone: true,
-    imports: [
-        MatCard,
-        MatToolbar,
-        NgIf,
-        CoursesListComponent,
-        MatPaginator,
-        MatProgressSpinner,
-        AsyncPipe,
-    ],
+  selector: 'app-courses',
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.scss'],
+  standalone: true,
+  imports: [
+    MatCard,
+    MatToolbar,
+    CoursesListComponent,
+    MatPaginator,
+    MatProgressSpinner,
+    AsyncPipe,
+  ],
 })
 export class CoursesComponent implements OnInit {
   courses$: Observable<CoursePage> | null = null;
@@ -90,16 +90,24 @@ export class CoursesComponent implements OnInit {
   }
 
   onDelete(course: Course) {
-    this.coursesService.delete(course._id).subscribe(
-      () => {
-        this.snackBar.open('Curso removido com sucesso!', 'Close', {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
-        this.refresh();
-      },
-      () => this.onError('Error ao tentar remover curso.')
-    );
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: 'Tem certeza que deseja remover esse curso?',
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.coursesService.delete(course._id).subscribe(
+          () => {
+            this.refresh();
+            this.snackBar.open('Curso removido com sucesso!', 'X', {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'center',
+            });
+          },
+          () => this.onError('Erro ao tentar remover curso.')
+        );
+      }
+    });
   }
 }
