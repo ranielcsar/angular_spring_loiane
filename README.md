@@ -4,7 +4,7 @@
 Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGxZ4Rq3BOBpwaVgAPxTxhdX_TfSVlTcY
 
 ### Sobre
-> A aplicação tem como objetivo o gerenciamento de Cursos no qual você pode criar um novo curso, atualizar, deletar e ver todos os cursos cadastrados!
+A aplicação tem como objetivo o gerenciamento de Cursos no qual você pode criar um novo curso, atualizar, deletar e ver todos os cursos cadastrados!
 <br>
 
 ### Funcionalidades
@@ -16,13 +16,14 @@ Disponível gratuitamente no Youtube: https://www.youtube.com/playlist?list=PLGx
 #### Front
 > - [x] mensagens de feedback de sucesso e erro
 > - [x] validações nos formulários
-> - [ ] diálogo de confirmação de deleção
+> - [x] diálogo de confirmação de deleção
         
 #### Back
 > - [x] validação de dados ao criar curso
-> - [ ] adicionar páginação
+> - [x] adicionar páginação
 > - [ ] aceitar imagens
----
+
+<br />
 
 Por enquanto o curso possui essas propriedades:
 ```ts
@@ -34,13 +35,13 @@ export interface Course {
 ```
 
 ### Tecnologias Web
-> - Angular
-> - Angular Material
+- Angular
+- Angular Material
 
 ### Tecnologias API/Server
-> - Java
-> - Spring Boot
-> - Lombok
-> - Maven
-> - H2 Database
-> - Java Bean Validation
+- Java
+- Spring Boot
+- Lombok
+- Maven
+- H2 Database
+- Java Bean Validation
